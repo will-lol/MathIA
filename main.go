@@ -25,7 +25,7 @@ func main() {
 	const inputDir = "./images/"
 	const csvDir = "./csv/"
 	resolutions := [...]int{2448, 2295, 2142, 1989, 1836, 1683, 1530, 1377, 1224, 1071, 918, 765, 612, 459, 306, 153}
-	const targetSSIM = 0.9
+	const targetSSIM = 0.95
 
 	entries, err := os.ReadDir(inputDir)
 	if err != nil {
