@@ -90,10 +90,7 @@ func encodeToQuality(img image.Image, quality float64, tolerance float64, refere
 		encodedResize := toGray(resize.Resize(uint(width), 0, imgEncoded, resize.NearestNeighbor))
 		currentSsim = ssim.Ssim(&grayscaleImg, &encodedResize)
 		walkerInstance.Walk(jpegQuality)
-		if walkerInstance.Check(isEqual) {
-			break
-		}
-		if isEqualWithinTolerance(currentSsim, quality, tolerance) {
+		if walkerInstance.Check(isEqual) || isEqualWithinTolerance(currentSsim, quality, tolerance) || jpegQuality == 100 || jpegQuality == 1 {
 			break
 		}
 		if currentSsim > quality {
