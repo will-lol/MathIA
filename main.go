@@ -48,7 +48,7 @@ func main() {
 
 			for _, entry := range resolutions {
 				resized := resize.Resize(uint(entry), 0, image, resize.NearestNeighbor)
-				bytes, err := encodeToQuality(resized, targetSSIM, 0.01)
+				bytes, err := encodeToQuality(resized, targetSSIM, 0.01, image)
 				log.Println(bytes)
 				if err != nil {
 					log.Fatal(err)
