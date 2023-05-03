@@ -1,0 +1,14 @@
+github.com/arjantop/imageoptimizer v0.0.0-20170516174955-a04687a71659 h1:AuTIq82/4hUHS4yEtF5fZ7Ti1Zk81loy39844HVPw5s=
+github.com/arjantop/imageoptimizer v0.0.0-20170516174955-a04687a71659/go.mod h1:NcGxyMZtI8mOt/coAywGkRm0nohl6ucaayb0FUU8v80=
+github.com/disintegration/gift v1.2.1 h1:Y005a1X4Z7Uc+0gLpSAsKhWi4qLtsdEcMIbbdvdZ6pc=
+github.com/disintegration/gift v1.2.1/go.mod h1:Jh2i7f7Q2BM7Ezno3PhfezbR1xpUg9dUg3/RlKGr4HI=
+github.com/jszwec/csvutil v1.8.0 h1:G7vS2LGdpZZDH1HmHeNbxOaJ/ZnJlpwGFvOkTkJzzNk=
+github.com/jszwec/csvutil v1.8.0/go.mod h1:/E4ONrmGkwmWsk9ae9jpXnv9QT8pLHEPcCirMFhxG9I=
+github.com/nfnt/resize v0.0.0-20180221191011-83c6a9932646 h1:zYyBkD/k9seD2A7fsi6Oo2LfFZAehjjQMERAvZLEDnQ=
+github.com/nfnt/resize v0.0.0-20180221191011-83c6a9932646/go.mod h1:jpp1/29i3P1S/RLdc7JQKbRpFeM1dOBd8T9ki5s+AY8=
+github.com/will-lol/Walker v0.0.0-20230502102920-b4368efebb5f h1:IhRyKBBECFNLPH9vDNsL9Dv2esan75woq4BhsBFmoAY=
+github.com/will-lol/Walker v0.0.0-20230502102920-b4368efebb5f/go.mod h1:6E2WwEdM7nzvBvhTZN9vWM5ER72Doo1AKtyI7DjdsjM=
+github.com/will-lol/walker v0.0.0-20230502103659-4c6a90b267e4 h1:25kF0MSP9vbHBhgqqoyTtcfaF6S7+/1n4UxUOreFy0c=
+github.com/will-lol/walker v0.0.0-20230502103659-4c6a90b267e4/go.mod h1:nEjnY+F9WO1XHtjkidcJvtTNSSEdN4GwW6cNsW+HkRk=
+go-hep.org/x/hep v0.32.1 h1:O96fOyMP+4ET8X+Uu38VFdegQb7rL0rjmFqXMCSm4VM=
+go-hep.org/x/hep v0.32.1/go.mod h1:VX3IVUv0Ku5bgWhE+LxRQ1aT7BmWWxSxQu02hfsoeRI=
