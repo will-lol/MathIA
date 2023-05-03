@@ -69,7 +69,7 @@ func main() {
 	}
 }
 
-func encodeToQuality(img image.Image, quality float64, tolerance float64) ([]byte, error) {
+func encodeToQuality(img image.Image, quality float64, tolerance float64, reference image.Image) ([]byte, error) {
 	var buf bytes.Buffer
 	currentSsim := 0.0
 	walkerInstance := walker.NewWalker(3)
@@ -85,7 +85,7 @@ func encodeToQuality(img image.Image, quality float64, tolerance float64) ([]byt
 		if err != nil {
 			return nil, err
 		}
-		grayscaleImg := toGray(img)
+		grayscaleImg := toGray(reference)
 		grayscaleImgEncoded := toGray(imgEncoded)
 		currentSsim = ssim.Ssim(&grayscaleImg, &grayscaleImgEncoded)
 		walkerInstance.Walk(jpegQuality)
