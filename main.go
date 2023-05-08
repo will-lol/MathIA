@@ -46,12 +46,11 @@ func main() {
 		}
 		for _, entry := range resolutions {
 			resized := resize.Resize(uint(entry), 0, image, resize.NearestNeighbor)
-			bytes, err := encodeToQuality(resized, targetSSIM, 0.005, image)
-			log.Println(bytes)
+			encodedImage, err := encodeToQuality(resized, targetSSIM, 0.005, image)
 			if err != nil {
 				log.Fatal(err)
 			}
-			result = append(result, Result{Resolution: entry, Bytes: len(bytes)})
+			result = append(result, Result{Resolution: entry, Bytes: len(encodedImage.Bytes), FinalQuality: encodedImage.Quality})
 		}
 		csvString, err := csvutil.Marshal(result)
 		if err != nil {
