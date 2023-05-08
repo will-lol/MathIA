@@ -13,12 +13,12 @@ import (
 	"math"
 	"os"
 	"path/filepath"
-	"strconv"
 )
 
 type Result struct {
-	Resolution int
-	Bytes      int
+	Resolution   int
+	Bytes        int
+	FinalQuality float64
 }
 
 func main() {
@@ -27,49 +27,49 @@ func main() {
 	resolutions := [...]int{2448, 2295, 2142, 1989, 1836, 1683, 1530, 1377, 1224, 1071, 918, 765, 612, 459, 306, 153}
 	const targetSSIM = 0.95
 
-	entries, err := os.ReadDir(inputDir)
+	argPath := os.Args[1]
+	file, err := os.Open(argPath)
+	entry, err := file.Stat()
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	for i, entry := range entries {
-		if !entry.IsDir() && filepath.Ext(entry.Name()) == ".png" {
-			result := make([]Result, 0, len(resolutions))
-
-			file, err := os.Open(inputDir + entry.Name())
-			if err != nil {
-				log.Fatal(err)
-			}
-			defer file.Close()
-			image, err := png.Decode(file)
-			if err != nil {
-				log.Fatal(err)
-			}
-
-			for _, entry := range resolutions {
-				resized := resize.Resize(uint(entry), 0, image, resize.NearestNeighbor)
-				bytes, err := encodeToQuality(resized, targetSSIM, 0.005, image)
-				log.Println(bytes)
-				if err != nil {
-					log.Fatal(err)
-				}
-				result = append(result, Result{Resolution: entry, Bytes: len(bytes)})
-			}
-			csvString, err := csvutil.Marshal(result)
-			if err != nil {
-				log.Fatal(err)
-			}
-			csvBytes := []byte(csvString)
-			err = os.WriteFile(csvDir+strconv.Itoa(i)+".csv", csvBytes, 0777)
-			if err != nil {
-				log.Fatal(err)
-			}
+	if !entry.IsDir() && filepath.Ext(entry.Name()) == ".png" {
+		result := make([]Result, 0, len(resolutions))
+		file, err := os.Open(inputDir + entry.Name())
+		if err != nil {
+			log.Fatal(err)
 		}
-
+		defer file.Close()
+		image, err := png.Decode(file)
+		if err != nil {
+			log.Fatal(err)
+		}
+		for _, entry := range resolutions {
+			resized := resize.Resize(uint(entry), 0, image, resize.NearestNeighbor)
+			encodedImage, err := encodeToQuality(resized, targetSSIM, 0.005, image)
+			if err != nil {
+				log.Fatal(err)
+			}
+			result = append(result, Result{Resolution: entry, Bytes: len(encodedImage.Bytes), FinalQuality: encodedImage.Quality})
+		}
+		csvString, err := csvutil.Marshal(result)
+		if err != nil {
+			log.Fatal(err)
+		}
+		csvBytes := []byte(csvString)
+		err = os.WriteFile(csvDir+entry.Name()+".csv", csvBytes, 0777)
+		if err != nil {
+			log.Fatal(err)
+		}
 	}
 }
 
-func encodeToQuality(img image.Image, quality float64, tolerance float64, reference image.Image) ([]byte, error) {
+type EncodeResult struct {
+	Bytes   []byte
+	Quality float64
+}
+
+func encodeToQuality(img image.Image, quality float64, tolerance float64, reference image.Image) (*EncodeResult, error) {
 	var buf bytes.Buffer
 	currentSsim := 0.0
 	walkerInstance := walker.NewWalker(3)
@@ -100,7 +100,7 @@ func encodeToQuality(img image.Image, quality float64, tolerance float64, refere
 		}
 		buf.Reset()
 	}
-	return buf.Bytes(), nil
+	return &EncodeResult{Bytes: buf.Bytes(), Quality: currentSsim}, nil
 }
 
 func isEqual(x, y any) bool {
