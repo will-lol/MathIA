@@ -16,8 +16,9 @@ import (
 )
 
 type Result struct {
-	Resolution int
-	Bytes      int
+	Resolution   int
+	Bytes        int
+	FinalQuality float64
 }
 
 func main() {
