@@ -65,7 +65,12 @@ func main() {
 	}
 }
 
-func encodeToQuality(img image.Image, quality float64, tolerance float64, reference image.Image) ([]byte, error) {
+type EncodeResult struct {
+	Bytes   []byte
+	Quality float64
+}
+
+func encodeToQuality(img image.Image, quality float64, tolerance float64, reference image.Image) (*EncodeResult, error) {
 	var buf bytes.Buffer
 	currentSsim := 0.0
 	walkerInstance := walker.NewWalker(3)
@@ -96,7 +101,7 @@ func encodeToQuality(img image.Image, quality float64, tolerance float64, refere
 		}
 		buf.Reset()
 	}
-	return buf.Bytes(), nil
+	return &EncodeResult{Bytes: buf.Bytes(), Quality: currentSsim}, nil
 }
 
 func isEqual(x, y any) bool {
